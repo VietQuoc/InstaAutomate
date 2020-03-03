@@ -1,0 +1,8 @@
+USERNAME="vietquoc3012"
+PASSWORD="q4320086"
+LIKE="1"
+FOLLOW="1"
+COMMENT="1"
+HAGTAG="#vuithoi,#vuiqua"
+COMMENT="Vui quá đi thôi,Vui lắm,Rất vui,Thật Vui,Cái này hay nhỉ"
+REPEAT="5"
