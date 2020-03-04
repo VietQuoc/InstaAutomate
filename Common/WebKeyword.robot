@@ -55,8 +55,7 @@ Click Cancel Button
 
 Repeat Like Follow Comment
     [Arguments]    ${index}
-    ${repeat}    Get From List    ${LIST_REPEATS}    ${index}
-    :FOR    ${i}    IN RANGE    0    ${repeat}
+    :FOR    ${i}    IN RANGE    0    ${REPEAT}
     \    Run Keyword And Continue On Failure    Comment
     \    Run Keyword And Continue On Failure    Like
     \    Run Keyword And Continue On Failure    Follow
@@ -72,12 +71,9 @@ Repeat Like Follow Comment For Hagtag
 
 Read Excel File For Hagtag
     Open Excel Document    HagtagPlan.xlsx    doc_id=doc1
-    ${list_hag_tag}    Read Excel Column    col_num=1    sheet_name=Sheet1
+    ${list_hag_tag}    Read Excel Column    col_num=${COLUMN}    sheet_name=Sheet1
     Remove Values From List    ${list_hag_tag}    ${None}
-    ${list_comment}    Read Excel Column    col_num=2    sheet_name=Sheet1
+    ${list_comment}    Read Excel Column    col_num=${COLUMN}    sheet_name=Sheet2
     Remove Values From List    ${list_comment}    ${None}
-    ${list_repeats}    Read Excel Column    col_num=3    sheet_name=Sheet1
-    Remove Values From List    ${list_repeats}    ${None}
     Set Global Variable    ${LIST_HAG_TAG}    ${list_hag_tag}
     Set Global Variable    ${LIST_COMMENT}    ${list_comment}
-    Set Global Variable    ${LIST_REPEATS}    ${list_repeats}
