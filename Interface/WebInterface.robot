@@ -10,6 +10,7 @@ ${MOST_RECENT_CATEGORY}    //h2[text()='Most recent']/following::img[1]
 ${SELECT_ITEM_MOST_RECENT}    //h2[text()='Most recent']/following::div[1]/div[1]/div[1]/div[1]
 ${SELECTED_ITEM_DIALOG_SHOW}    //div[@role='dialog']
 ${LIKE_BUTTON}    //*[@aria-label='Like']
-${COMMENT_TEXTBOX}    //textarea[1]
+${COMMENT_TEXTBOX}    //form/textarea
 ${FOLLOW_BUTTON}    //div[@role='dialog']//button[text()='Follow']
+${POST_BUTTON}    //button[@type='submit']
 ${NEXT_BUTTON}    //a[text()='Next']
