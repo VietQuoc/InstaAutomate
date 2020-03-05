@@ -7,7 +7,7 @@ Resource    ../Interface/WebInterface.robot
 
 *** Keywords ***
 Login
-    Open Browser    ${LOGIN_URL}    Chrome
+    Open Browser    ${LOGIN_URL}    headlesschrome
     Wait Until Page Contains Element    ${USERNAME_TEXTBOX}
     Input Text    ${USERNAME_TEXTBOX}    ${USERNAME}
     Input Text    ${PASSWORD_TEXTBOX}    ${PASSWORD}
