@@ -29,11 +29,11 @@ Search By Hagtag
 
 Like
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${LIKE_BUTTON}   1
-    Run Keyword If    '${LIKE}'=='1' and ${status}    Click Element    ${LIKE_BUTTON}
+    Run Keyword If    ${LIKE}==${TRUE} and ${status}    Click Element    ${LIKE_BUTTON}
 
 Follow
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${FOLLOW_BUTTON}   1
-    Run Keyword If    '${FOLLOW}'=='1' and ${status}    Click Element    ${FOLLOW_BUTTON}
+    Run Keyword If    ${FOLLOW}==${TRUE} and ${status}    Click Element    ${FOLLOW_BUTTON}
 
 Comment
     ${count_comment}    Get Length    ${LIST_COMMENT}
@@ -41,7 +41,7 @@ Comment
     ${number}    Get From List    ${number}    0
     ${comment_text}    Get From List    ${LIST_COMMENT}    ${number}
     Wait Until Page Contains Element    ${COMMENT_TEXTBOX}    10s
-    Run Keyword If    '${COMMENT}'=='1'    Run Keywords    Click Element    ${COMMENT_TEXTBOX}    AND
+    Run Keyword If    ${COMMENT}==${TRUE}    Run Keywords    Click Element    ${COMMENT_TEXTBOX}    AND
     ...   Press Keys    ${COMMENT_TEXTBOX}    ${comment_text}    AND
     ...   Click Element    ${POST_BUTTON}
     Run Keyword And Ignore Error    Wait Until Page Contains Element    //span[text()='${comment_text}']    5s
