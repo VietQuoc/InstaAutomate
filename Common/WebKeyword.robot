@@ -55,8 +55,9 @@ Click Cancel Button
 
 Repeat Like Follow Comment
     [Arguments]    ${index}
+    ${number}    Evaluate    ${index}%${SKIP_NUM}
     :FOR    ${i}    IN RANGE    0    ${REPEAT}
-    \    Run Keyword And Continue On Failure    Comment
+    \    Run Keyword If    "${number}"=="0"    Run Keyword And Continue On Failure    Comment
     \    Run Keyword And Continue On Failure    Like
     \    Run Keyword And Continue On Failure    Follow
     \    Run Keyword And Continue On Failure    Click Next Button
