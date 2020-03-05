@@ -70,9 +70,9 @@ Repeat Like Follow Comment For Hagtag
 
 Read Excel File For Hagtag
     Open Excel Document    HagtagPlan.xlsx    doc_id=doc1
-    ${list_hag_tag}    Read Excel Column    col_num=${COLUMN}    sheet_name=Sheet1
+    ${list_hag_tag}    Read Excel Column    col_num=${COLUMN}    sheet_name=Hashtags
     Remove Values From List    ${list_hag_tag}    ${None}
-    ${list_comment}    Read Excel Column    col_num=${COLUMN}    sheet_name=Sheet2
+    ${list_comment}    Read Excel Column    col_num=${COLUMN}    sheet_name=Comments
     Remove Values From List    ${list_comment}    ${None}
     Set Global Variable    ${LIST_HAG_TAG}    ${list_hag_tag}
     Set Global Variable    ${LIST_COMMENT}    ${list_comment}
