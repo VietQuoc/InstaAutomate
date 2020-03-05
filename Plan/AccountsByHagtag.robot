@@ -9,7 +9,7 @@ Accounts By Hagtag Plan
     Log    ${USERNAME}
     Log    ${PASSWORD}
     Log    ${LIKE}
-    Run Keyword If    ${LIKE}    Log    ok
+    Run Keyword If    "${LIKE}"=="false"    Log    ok
     Log    ${FOLLOW}
     Log    ${COMMENT}
     Log    ${REPEAT}
