@@ -44,6 +44,7 @@ Comment
     ...   Press Keys    ${COMMENT_TEXTBOX}    ${comment_text}    AND
     ...   Click Element    ${POST_BUTTON}
     Run Keyword And Ignore Error    Wait Until Page Contains Element    //span[text()='${comment_text}']    5s
+    Sleep    10
 
 Click Next Button
     Click Element    ${NEXT_BUTTON}
