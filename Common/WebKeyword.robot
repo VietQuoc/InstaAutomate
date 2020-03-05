@@ -12,8 +12,7 @@ Login
     Input Text    ${USERNAME_TEXTBOX}    ${USERNAME}
     Input Text    ${PASSWORD_TEXTBOX}    ${PASSWORD}
     CLick Element    ${LOGIN_SUBMIT_BUTTON}
-    Wait Until Page Contains Element    ${NOTIFICATION_DECINE_BUTTON}
-    Click Element    ${NOTIFICATION_DECINE_BUTTON}
+    Wait Until Page Contains Element    ${SEARCH_TEXTBOX}    10
 
 Search By Hagtag
     [Arguments]    ${tag}
