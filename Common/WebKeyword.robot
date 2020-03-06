@@ -3,6 +3,7 @@ Library    Selenium2Library
 Library    String
 Library    Collections
 Library    ExcelLibrary
+Library    ../Common/common.py
 Resource    ../Interface/WebInterface.robot
 
 *** Keywords ***
@@ -28,23 +29,43 @@ Search By Hagtag
 
 Like
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${LIKE_BUTTON}   1
-    Run Keyword If    "${LIKE}"=="true" and ${status}    Click Element    ${LIKE_BUTTON}
+    Run Keyword If    ${status}    Click Element    ${LIKE_BUTTON}
+    ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${UNLIKE_BUTTON}   3
+    ${like_fail}=    Set Variable If    ${status}    0    1
+    ${TOTAL_NUMBER_LIKE_FAILURE}=    Evaluate    ${TOTAL_NUMBER_LIKE_FAILURE}+${like_fail}
+    Set Global Variable    ${TOTAL_NUMBER_LIKE_FAILURE}    ${TOTAL_NUMBER_LIKE_FAILURE}
+    Sleep    ${LIKE_DELAY}
+    Wait Until Page Contains Element    ${UNLIKE_BUTTON}   1
 
 Follow
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${FOLLOW_BUTTON}   1
-    Run Keyword If    "${FOLLOW}"=="true" and ${status}    Click Element    ${FOLLOW_BUTTON}
+    Run Keyword If    ${status}    Click Element    ${FOLLOW_BUTTON}
+    ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${FOLLOWING_BUTTON}   3
+    ${follow_fail}=    Set Variable If    ${status}    0    1
+    ${TOTAL_NUMBER_FOLLOW_FAILURE}=    Evaluate    ${TOTAL_NUMBER_FOLLOW_FAILURE}+${follow_fail}
+    Set Global Variable    ${TOTAL_NUMBER_FOLLOW_FAILURE}    ${TOTAL_NUMBER_FOLLOW_FAILURE}
+    Sleep    ${FOLLOW_DELAY}
+    ${name}    Run Keyword If    ${status}    Get Text    ${SHOP_NAME}
+    ${status2}    Run Keyword And Return Status    List Should Not Contain Value    ${LIST_FOLLOW}    ${name}
+    Run Keyword If    ${status} and ${status2}    Run Keywords    Append To List    ${LIST_FOLLOW}    ${name}    AND    Set Global Variable    ${LIST_FOLLOW}
+    Wait Until Page Contains Element    ${FOLLOWING_BUTTON}   1
 
 Comment
     ${count_comment}    Get Length    ${LIST_COMMENT}
-    ${number}    Evaluate    random.sample(range(1, ${count_comment}), 1)    random
-    ${number}    Get From List    ${number}    0
+    ${number}     Random Number For Comment    ${0}    ${count_comment}    ${LAST_RANDOM_NUM}
+    Set Global Variable    ${LAST_RANDOM_NUM}    ${number}
+
     ${comment_text}    Get From List    ${LIST_COMMENT}    ${number}
     Wait Until Page Contains Element    ${COMMENT_TEXTBOX}    10s
-    Run Keyword If    "${COMMENT}"=="true"    Run Keywords    Click Element    ${COMMENT_TEXTBOX}    AND
-    ...   Press Keys    ${COMMENT_TEXTBOX}    ${comment_text}    AND
-    ...   Click Element    ${POST_BUTTON}
-    Run Keyword And Ignore Error    Wait Until Page Contains Element    //span[text()='${comment_text}']    5s
-    Run Keyword If    "${COMMENT}"=="true"    Sleep    ${DELAYS_TIME}
+    Click Element    ${COMMENT_TEXTBOX}
+    Press Keys    ${COMMENT_TEXTBOX}    ${comment_text}
+    Click Element    ${POST_BUTTON}
+    ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    //a[text()='${USERNAME}']    5s
+    ${comment_fail}=    Set Variable If    ${status}    0    1
+    ${TOTAL_NUMBER_COMMENT_FAILURE}=    Evaluate    ${TOTAL_NUMBER_COMMENT_FAILURE}+${comment_fail}
+    Set Global Variable    ${TOTAL_NUMBER_COMMENT_FAILURE}    ${TOTAL_NUMBER_COMMENT_FAILURE}
+    Sleep    ${COMMENT_DELAY}
+    Wait Until Page Contains Element    //a[text()='${USERNAME}']    1
 
 Click Next Button
     Click Element    ${NEXT_BUTTON}
@@ -55,11 +76,11 @@ Click Cancel Button
 
 Repeat Like Follow Comment
     [Arguments]    ${index}
-    ${number}    Evaluate    ${index}%${SKIP_NUM}
     :FOR    ${i}    IN RANGE    0    ${REPEAT}
-    \    Run Keyword If    "${number}"=="0"    Run Keyword And Continue On Failure    Comment
-    \    Run Keyword And Continue On Failure    Like
-    \    Run Keyword And Continue On Failure    Follow
+    \    ${number}    Evaluate    ${i}%${SKIP_NUM}
+    \    Run Keyword If    "${number}"=="0" and "${COMMENT}"=="true"       Run Keyword And Continue On Failure    Comment
+    \    Run Keyword If    "${LIKE}"=="true"      Run Keyword And Continue On Failure    Like
+    \    Run Keyword If    "${FOLLOW}"=="true"    Run Keyword And Continue On Failure    Follow
     \    Run Keyword And Continue On Failure    Click Next Button
 
 Repeat Like Follow Comment For Hagtag
