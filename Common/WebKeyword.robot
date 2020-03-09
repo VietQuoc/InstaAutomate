@@ -14,6 +14,7 @@ Login
     Input Text    ${PASSWORD_TEXTBOX}    ${PASSWORD}
     CLick Element    ${LOGIN_SUBMIT_BUTTON}
     Wait Until Page Contains Element    ${SEARCH_TEXTBOX}    10
+    Maximize Browser Window
 
 Search By Hagtag
     [Arguments]    ${tag}
@@ -44,7 +45,7 @@ Like
 Follow
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${FOLLOW_BUTTON}   5
     Sleep    0.5
-    Run Keyword If    ${status} and ${TOTAL_FOLLOW}<${FOLLOW_LIMIT}    Click Element    ${FOLLOW_BUTTON}
+    Run Keyword If    ${status} and ${TOTAL_FOLLOW}<${FOLLOW_LIMIT}    Run Keyword And Continue On Failure    Click Element    ${FOLLOW_BUTTON}
     ${temp}=    Evaluate    ${TOTAL_FOLLOW}+1
     Run Keyword If    ${status} and ${TOTAL_FOLLOW}<${FOLLOW_LIMIT}    Set Global Variable    ${TOTAL_FOLLOW}    ${temp}
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${FOLLOWING_BUTTON}   3
