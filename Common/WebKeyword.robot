@@ -19,7 +19,7 @@ Search By Hagtag
     [Arguments]    ${tag}
     Input Text    ${SEARCH_TEXTBOX}    ${tag}
     ${search_result_locator}    Replace String    ${SEARCH_RESULT}    $$    ${tag}
-    Wait Until Page Contains Element    ${search_result_locator}
+    Wait Until Page Contains Element    ${search_result_locator}    20
     Click Element    ${search_result_locator}
     Wait Until Page Contains Element    ${MOST_RECENT_CATEGORY}
     Scroll Element Into View    ${MOST_RECENT_CATEGORY}
@@ -30,7 +30,9 @@ Search By Hagtag
 Like
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${LIKE_BUTTON}   5
     Sleep    0.5
-    Run Keyword If    ${status}    CLick Element    ${LIKE_BUTTON}
+    Run Keyword If    ${status} and ${TOTAL_LIKE}<=${LIKE_LIMIT}    CLick Element    ${LIKE_BUTTON}
+    ${temp}=    Evaluate    ${TOTAL_LIKE}+1
+    Run Keyword If    ${status} and ${TOTAL_LIKE}<=${LIKE_LIMIT}    Set Global Variable    ${TOTAL_LIKE}    ${temp}
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${UNLIKE_BUTTON}   3
     Capture Page Screenshot
     ${like_fail}=    Set Variable If    ${status}    0    1
@@ -42,7 +44,9 @@ Like
 Follow
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${FOLLOW_BUTTON}   5
     Sleep    0.5
-    Run Keyword If    ${status}    Click Element    ${FOLLOW_BUTTON}
+    Run Keyword If    ${status} and ${TOTAL_FOLLOW}<=${FOLLOW_LIMIT}    Click Element    ${FOLLOW_BUTTON}
+    ${temp}=    Evaluate    ${TOTAL_FOLLOW}+1
+    Run Keyword If    ${status} and ${TOTAL_FOLLOW}<=${FOLLOW_LIMIT}    Set Global Variable    ${TOTAL_FOLLOW}    ${temp}
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${FOLLOWING_BUTTON}   3
     ${follow_fail}=    Set Variable If    ${status}    0    1
     ${TOTAL_NUMBER_FOLLOW_FAILURE}=    Evaluate    ${TOTAL_NUMBER_FOLLOW_FAILURE}+${follow_fail}
@@ -60,9 +64,11 @@ Comment
 
     ${comment_text}    Get From List    ${LIST_COMMENT}    ${number}
     Wait Until Page Contains Element    ${COMMENT_TEXTBOX}    10s
-    Click Element    ${COMMENT_TEXTBOX}
-    Press Keys    ${COMMENT_TEXTBOX}    ${comment_text}
-    Click Element    ${POST_BUTTON}
+    Run Keyword If    ${TOTAL_COMMENT}<=${COMMENT_LIMIT}    Click Element    ${COMMENT_TEXTBOX}
+    Run Keyword If    ${TOTAL_COMMENT}<=${COMMENT_LIMIT}    Press Keys    ${COMMENT_TEXTBOX}    ${comment_text}
+    Run Keyword If    ${TOTAL_COMMENT}<=${COMMENT_LIMIT}    Click Element    ${POST_BUTTON}
+    ${temp}=    Evaluate    ${TOTAL_COMMENT}+1
+    Run Keyword If    ${TOTAL_COMMENT}<=${COMMENT_LIMIT}    Set Global Variable    ${TOTAL_COMMENT}    ${temp}
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    //a[text()='${USERNAME}']    5s
     ${comment_fail}=    Set Variable If    ${status}    0    1
     ${TOTAL_NUMBER_COMMENT_FAILURE}=    Evaluate    ${TOTAL_NUMBER_COMMENT_FAILURE}+${comment_fail}

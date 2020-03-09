@@ -8,6 +8,9 @@ Accounts By Hagtag Plan
     Set Global Variable    ${TOTAL_NUMBER_LIKE_FAILURE}       ${0}
     Set Global Variable    ${TOTAL_NUMBER_COMMENT_FAILURE}    ${0}
     Set Global Variable    ${TOTAL_NUMBER_FOLLOW_FAILURE}     ${0}
+    Set Global Variable    ${TOTAL_LIKE}    ${1}
+    Set Global Variable    ${TOTAL_FOLLOW}    ${1}
+    Set Global Variable    ${TOTAL_COMMENT}    ${1}
     ${LIST_FOLLOW}    Create List
     Set Global Variable    ${LIST_FOLLOW}     ${LIST_FOLLOW}
     Read Excel File For Hagtag
