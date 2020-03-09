@@ -28,9 +28,11 @@ Search By Hagtag
     Wait Until Element Is Visible    ${SELECTED_ITEM_DIALOG_SHOW}    10
 
 Like
-    ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${LIKE_BUTTON}   1
-    Run Keyword If    ${status}    Click Element    ${LIKE_BUTTON}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${LIKE_BUTTON}   5
+    Sleep    0.5
+    Run Keyword If    ${status}    CLick Element    ${LIKE_BUTTON}
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${UNLIKE_BUTTON}   3
+    Capture Page Screenshot
     ${like_fail}=    Set Variable If    ${status}    0    1
     ${TOTAL_NUMBER_LIKE_FAILURE}=    Evaluate    ${TOTAL_NUMBER_LIKE_FAILURE}+${like_fail}
     Set Global Variable    ${TOTAL_NUMBER_LIKE_FAILURE}    ${TOTAL_NUMBER_LIKE_FAILURE}
@@ -38,7 +40,8 @@ Like
     Wait Until Page Contains Element    ${UNLIKE_BUTTON}   1
 
 Follow
-    ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${FOLLOW_BUTTON}   1
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${FOLLOW_BUTTON}   5
+    Sleep    0.5
     Run Keyword If    ${status}    Click Element    ${FOLLOW_BUTTON}
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${FOLLOWING_BUTTON}   3
     ${follow_fail}=    Set Variable If    ${status}    0    1
@@ -68,6 +71,8 @@ Comment
     Wait Until Page Contains Element    //a[text()='${USERNAME}']    1
 
 Click Next Button
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    //button[text()="Report a Problem"]    1
+    Run Keyword If    ${status}    CLick Element    //button[text()="OK"]
     Click Element    ${NEXT_BUTTON}
 
 Click Cancel Button
