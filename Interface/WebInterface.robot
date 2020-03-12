@@ -17,3 +17,5 @@ ${FOLLOWING_BUTTON}    //div[@role='dialog']//button[text()='Following']
 ${POST_BUTTON}    //button[@type='submit']
 ${NEXT_BUTTON}    //a[text()='Next']
 ${SHOP_NAME}      //div[@role='dialog']//div[@role='dialog']//a[not(@style)]
+
+${LIST_FOLLOWING_BUTTON}
