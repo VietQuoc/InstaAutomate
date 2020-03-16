@@ -9,12 +9,13 @@ Resource    ../Interface/WebInterface.robot
 *** Keywords ***
 Login
     Open Browser    ${LOGIN_URL}    headlesschrome
+    Maximize Browser Window
     Wait Until Page Contains Element    ${USERNAME_TEXTBOX}
+    Sleep   5s
     Input Text    ${USERNAME_TEXTBOX}    ${USERNAME}
     Input Text    ${PASSWORD_TEXTBOX}    ${PASSWORD}
     CLick Element    ${LOGIN_SUBMIT_BUTTON}
     Wait Until Page Contains Element    ${SEARCH_TEXTBOX}    10
-    Maximize Browser Window
 
 Search By Hagtag
     [Arguments]    ${tag}
