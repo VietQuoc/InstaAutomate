@@ -6,6 +6,8 @@ Suite Teardown    Close Browser
 Accounts By Hagtag Plan
     ${LIST_FOLLOWER}    Create List    Followed
     Set Global Variable    ${LIST_FOLLOWER}
+    ${LIST_TIME_FOLLOWER}    Create List    LIST_TIME_FOLLOWER
+    Set Global Variable    ${LIST_TIME_FOLLOWER}
     ${LIST_COMMENTER}    Create List    Commented
     Set Global Variable    ${LIST_COMMENTER}
     ${LIST_LIKER}    Create List    Liked

@@ -58,8 +58,10 @@ Follow
     Run Keyword If    ${TOTAL_FOLLOW}<${FOLLOW_LIMIT}    Set Global Variable    ${TOTAL_NUMBER_FOLLOW_FAILURE}    ${TOTAL_NUMBER_FOLLOW_FAILURE}
     Sleep    ${FOLLOW_DELAY}
     ${name}    Run Keyword If    ${status}    Get Text    ${SHOP_NAME}
+    ${time}    Get Time    epoch
     ${status2}    Run Keyword And Return Status    List Should Not Contain Value    ${LIST_FOLLOWER}    ${name}
     Run Keyword If    ${status} and ${status2} and ${TOTAL_FOLLOW}<${FOLLOW_LIMIT}    Run Keywords    Append To List    ${LIST_FOLLOWER}    ${name}    AND    Set Global Variable    ${LIST_FOLLOWER}
+    Run Keyword If    ${status} and ${status2} and ${TOTAL_FOLLOW}<${FOLLOW_LIMIT}    Run Keywords    Append To List    ${LIST_TIME_FOLLOWER}    ${time}    AND    Set Global Variable    ${LIST_TIME_FOLLOWER}
     Run Keyword If    ${TOTAL_FOLLOW}<${FOLLOW_LIMIT}    Wait Until Page Contains Element    ${FOLLOWING_BUTTON}   1
 
 Comment
@@ -139,6 +141,8 @@ Write Data Report To Excel File
     Write Excel Column    col_num=8    col_data=${LIKED_TOTAL_RUN}
     ${like_failure}    Create List    Like Fail    ${TOTAL_NUMBER_LIKE_FAILURE}
     Write Excel Column    col_num=9    col_data=${like_failure}
+    
+    Write Excel Column    col_num=10    col_data=${LIST_TIME_FOLLOWER}
 
     Save Excel Document    filename=report.xlsx
     Close All Excel Documents
