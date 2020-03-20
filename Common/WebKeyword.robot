@@ -98,7 +98,7 @@ Click Cancel Button
     Go To    https://www.instagram.com/
 
 Repeat Like Follow Comment
-    [Arguments]    ${index}
+    [Arguments]    ${index}=0
     :FOR    ${i}    IN RANGE    0    ${REPEAT}
     \    ${number}    Evaluate    ${i}%${SKIP_NUM}
     \    Run Keyword If    "${number}"=="0" and "${COMMENT}"=="true"       Run Keyword And Continue On Failure    Comment
@@ -146,3 +146,44 @@ Write Data Report To Excel File
 
     Save Excel Document    filename=report.xlsx
     Close All Excel Documents
+
+Goto And Select User
+    :FOR    ${item}    IN    @{LIST_HAG_TAG}
+    \    Go To    https://www.instagram.com/${item}
+    \    Wait Until Element Is Visible    ${PROFILE_FOLLOWER_BUTTON}    20s
+    \    Click Element    ${PROFILE_FOLLOWER_BUTTON}
+    \    Run Keyword And Continue On Failure    Select Followers And Repeat Job
+
+Select Followers And Repeat Job
+    Wait Until Element Is Visible    ${PROFILE_FOLLOWER_MODAL_TITLE}    10s
+    Wait Until Page Contains Element    ${PROFILE_FOLLOWER_MODAL_DESCRIPTION}    10s
+    Click Element    ${PROFILE_FOLLOWER_MODAL_DESCRIPTION}    
+    ${number}    Convert To Integer    ${NUMBER_FOLLOWER}
+    FOR    ${i}    IN RANGE   0    100
+    \    Wait Until Page Contains Element    ${PROFILE_FOLLOWE_NAME}    20
+    \    ${number_name}    Get WebElements    ${PROFILE_FOLLOWE_NAME}
+    \    ${number_name}    Get Length    ${number_name}
+    \    Exit For Loop If    ${number_name}>=${number}
+    \    Run Keyword And Ignore Error    Click Element    ${PROFILE_FOLLOWER_MODAL_DESCRIPTION}
+    \    Press Keys    None    END
+    \    Capture Page Screenshot    
+    
+    ${list_user_run}    Create List    
+    ${list_element}    Get WebElements    ${PROFILE_FOLLOWE_NAME}
+    ${i}    Set Variable    ${0}
+    FOR    ${item}    IN    @{list_element}
+    \    ${h}    Get Element Attribute    ${item}    href
+    \    Append To List    ${list_user_run}    ${h}
+    \    ${i}    Evaluate    ${i}+1
+    \    Exit For Loop If    ${i}==${number}
+    
+    Log    ${list_user_run}
+    FOR    ${item}    IN    @{list_user_run}
+        Go To    ${item}
+        Wait Until Element Is Visible    //a[@href]//img    20s
+        Execute JavaScript    window.scrollTo(0, 200)
+        Click Element    //a[@href]//img/../..
+        Run Keyword And Ignore Error    Wait Until Element Is Visible    ${SELECTED_ITEM_DIALOG_SHOW}    20
+        Run Keyword And Ignore Error    Repeat Like Follow Comment
+    END
+
