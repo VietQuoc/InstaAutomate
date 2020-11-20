@@ -8,14 +8,23 @@ Resource    ../Interface/WebInterface.robot
 
 *** Keywords ***
 Login
-    Open Browser    ${LOGIN_URL}    headlesschrome
+    [Arguments]    ${LOGIN_URL}
+    Open Browser    ${LOGIN_URL}    Chrome
     Maximize Browser Window
-    Wait Until Page Contains Element    ${USERNAME_TEXTBOX}
-    Sleep   5s
-    Input Text    ${USERNAME_TEXTBOX}    ${USERNAME}
-    Input Text    ${PASSWORD_TEXTBOX}    ${PASSWORD}
-    CLick Element    ${LOGIN_SUBMIT_BUTTON}
-    Wait Until Page Contains Element    ${SEARCH_TEXTBOX}    10
+
+Find Company
+    Wait Until Element Is Visible    //div[contains(@class,'news-v3')]//h2/a
+    @{list}    Get WebElements    //div[contains(@class,'news-v3')]//h2/a
+    :FOR    ${i}    IN RANGE   1    16
+    \    ${name}    Get Text    (//div[contains(@class,'news-v3')]//h2/a)[${i}]
+    \    ${address}    Get Text    (//div[contains(@class,'news-v3')]//p[contains(text(),'Địa chỉ')])[${i}]
+    \    ${mst}    Get Text    (//div[contains(@class,'news-v3')]//h3[contains(text(),'Mã số thuế')]//a)[${i}]
+    \    ${nghe}    Get Text    (//div[contains(@class,'news-v3')]//*[contains(text(),'Ngành nghề chính')]//strong)[${i}]
+    \    Append To List    ${list_name}    ${name}
+    \    Append To List    ${list_address}    ${address}
+    \    Append To List    ${list_mst}    ${mst}
+    \    Append To List    ${list_nghe}    ${nghe}
+
 
 Search By Hagtag
     [Arguments]    ${tag}
@@ -125,27 +134,11 @@ Read Excel File For Hagtag
     Close All Excel Documents
 
 Write Data Report To Excel File
-    ${doc1}    Create Excel Document    doc_id=docname1
-    Write Excel Column    col_num=1    col_data=${LIST_FOLLOWER}
-    Write Excel Column    col_num=2    col_data=${LIST_LIKER}
-    Write Excel Column    col_num=3    col_data=${LIST_COMMENTER}
-
-    Write Excel Column    col_num=4    col_data=${FOLOWED_TOTAL_RUN}
-    ${followed_failure}    Create List    Follow Fail    ${TOTAL_NUMBER_FOLLOW_FAILURE}
-    Write Excel Column    col_num=5    col_data=${followed_failure}
-
-    Write Excel Column    col_num=6    col_data=${COMMENTED_TOTAL_RUN}
-    ${comment_failure}    Create List    Comment Fail    ${TOTAL_NUMBER_COMMENT_FAILURE}
-    Write Excel Column    col_num=7    col_data=${comment_failure}
-
-    Write Excel Column    col_num=8    col_data=${LIKED_TOTAL_RUN}
-    ${like_failure}    Create List    Like Fail    ${TOTAL_NUMBER_LIKE_FAILURE}
-    Write Excel Column    col_num=9    col_data=${like_failure}
-    
-    Write Excel Column    col_num=10    col_data=${LIST_TIME_FOLLOWER}
-
-    Save Excel Document    filename=report.xlsx
-    Close All Excel Documents
+    [Arguments]    ${name}    ${address}    ${mst}    ${nghe}
+    Write Excel Column    col_num=1    col_data=${name}
+    Write Excel Column    col_num=2    col_data=${address}
+    Write Excel Column    col_num=3    col_data=${mst}
+    Write Excel Column    col_num=4    col_data=${nghe}
 
 Goto And Select User
     :FOR    ${item}    IN    @{LIST_HAG_TAG}

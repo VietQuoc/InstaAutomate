@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>InstaAutomate</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.python.pydev.PyDevBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.robotframework.ide.eclipse.main.plugin.robotLibrariesBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.python.pydev.pythonNature</nature>
+		<nature>org.robotframework.ide.eclipse.main.plugin.robotNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>libspecs/BuiltIn.py</name>
+			<type>1</type>
+			<location>C:/Program Files (x86)/Python37-32/lib/site-packages/robot/libraries/BuiltIn.py</location>
+		</link>
+		<link>
+			<name>libspecs/Reserved.py</name>
+			<type>1</type>
+			<location>C:/Program Files (x86)/Python37-32/lib/site-packages/robot/libraries/Reserved.py</location>
+		</link>
+		<link>
+			<name>libspecs/Selenium2Library.py</name>
+			<type>1</type>
+			<location>C:/Program Files (x86)/Python37-32/Lib/site-packages/Selenium2Library/__init__.py</location>
+		</link>
+	</linkedResources>
+</projectDescription>
